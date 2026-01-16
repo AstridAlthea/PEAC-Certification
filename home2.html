@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
+z    <style>
+        :root {
+            --primary: #660000;
+            --primary-dark: #770000;
+            --primary-light: #d10000d3;
+            --accent: #e22f2f;
+            --accent-light: #f05a5a;
+            --light-bg: #f8f9fa;
+            --light-gray: #f0f2f5;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --text-white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: #ffffff;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--text-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--text-white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--text-white);
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--text-white);
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background: var(--primary-dark);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .top-nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            bottom: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .top-nav a:hover::after,
+        .top-nav a.active::after {
+            transform: scaleX(1);
+        }
+
+        .top-nav a:hover {
+            color: var(--accent);
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: var(--text-white);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--text-white);
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-left img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .header-text p {
+            margin-top: 5px;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .contact-info {
+            text-align: right;
+        }
+
+        .contact-info p {
+            margin-bottom: 5px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .header-right img {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--border-radius);
+            border: 3px solid var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(143, 75, 75, 0.404), rgba(97, 46, 46, 0.384)), url('1.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-white);
+            padding: 100px 20px;
+           
+
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            background: var(--light-bg);
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .quick-links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quick-link-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .quick-link-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .quick-link-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .quick-link-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .about-section {
+            margin-bottom: 80px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        /* Programs Section */
+        .programs-section {
+            background: var(--light-gray);
+            padding: 80px 0;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .program-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .program-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .program-card:hover .program-img img {
+            transform: scale(1.05);
+        }
+
+        .program-content {
+            padding: 25px;
+        }
+
+        .program-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .program-content p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .program-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .program-tag {
+            background: rgba(44, 85, 48, 0.1);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        
+
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .footer-column p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        hr {
+
+            border: none;
+            width: 50%;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+            margin: 25px auto;
+        }
+
+         /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--pure-white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--border-radius-lg);
+            background: var(--primary-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            font-weight: bold;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 30px rgba(211, 47, 47, 0.3);
+        }
+
+        
+        
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+        }
+
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .header-right {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .contact-info {
+                text-align: center;
+            }
+            
+            .contact-info p {
+                justify-content: center;
+            }
+            
+            .top-nav-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .top-nav-right {
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .header-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .quick-links-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .top-nav ul {
+                gap: 15px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!--- Loading Screen -->
+    <div class="Loading-screen" id="loadingScreen">
+        <div class="loading-logo">BASIC EDUCATION DEPARTMENT <br>
+             Private Education Assistance Committee (PEAC) VISIT <br> 
+             K TO 6 CERTIFICATION
+        </div>
+        <div class="loading-bar"></div>  
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav" aria-label="Top Navigation">
+        <div class="top-nav-container">
+            <ul>
+                <li><a href="home.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="part1.html"><i class="fas fa-book-open"></i> Part I</a></li>
+                <li><a href="part2.html"><i class="fas fa-chart-bar"></i> Part II</a></li>
+                <li><a href="part3.html"><i class="fas fa-users"></i> Part III</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        
+            <div class="hero-content">
+                
+            </div>
+       
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Greetings of peace</h2>
+                        <p>We have all struggled over the last few years. Despite this, the warriors within us brought forth our natural resilience and endurance to survive the pandemic's terrible effects.</p>
+                        <p>Accordingly, the UE-Basic Education Department stayed true to its founding principles of providing top-notch education and developing the next generation of leaders for the country.</p><br>
+                        <p>With this, we would want to demonstrate to you, dear accreditors, the steps taken by the Department to ensure the ongoing and efficient operation of learning.</p>
+                        <p>Let us all witness how...</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&h=500" alt="PEAC Center">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section class="programs-section" id="programs">
+            <div class="container">
+                <div class="section-title">
+                    <hr>
+                        <h2>Tomorrow Begins in the East!</h2>
+                     <hr>
+                </div>
+                
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <div class="program-img">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&h=200" alt="Leadership Program">
+                        </div>
+                        <div class="program-content">
+                            <h3>PEAC K to 6 VC SY2025-2026</h3>
+                            <p>PART I</p>
+                            <a href="#" class="btn btn-secondary">Program Details</a>
+                        </div>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-img">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&h=200" alt="Data Analytics">
+                        </div>
+                        <div class="program-content">
+                            <h3>PEAC K to 6 VC SY2025-2026</h3>
+                            <p>PART II</p>
+                            <a href="#" class="btn btn-secondary">Program Details</a>
+                        </div>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-img">
+                            <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=600&h=200" alt="Project Management">
+                        </div>
+                        <div class="program-content">
+                            <h3>PEAC K to 6 VC SY2025-2026</h3>
+                            <p>PART III</p>
+                            <a href="#" class="btn btn-secondary">Program Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="home.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="part1.html"><i class="fas fa-chevron-right"></i> Part I</a></li>
+                        <li><a href="part2.html"><i class="fas fa-chevron-right"></i> Part II</a></li>
+                        <li><a href="part3.html"><i class="fas fa-chevron-right"></i> Part III</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> LCT Building, 105 Samson Road, Caloocan City</p>
+                    <p><i class="fas fa-phone"></i> (02) 8367-4572 loc 202</p>
+                    <p><i class="fas fa-envelope"></i> basiced.cal@ue.edu.ph</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025. University of the East., Philippines</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+    
+        // Add active class to current page in navigation
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.top-nav a');
+        
+        navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === currentPage) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

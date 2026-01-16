@@ -1,0 +1,367 @@
+<html>
+    <head>
+        <title>HOME</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
+
+        <style>
+            :root{
+                --primary: #660000;
+                --primary-dark: #770000;
+                --primary-light: #d10000d3;
+                --accent: #e22f2f;
+                --accent-light: #f05a5a;
+                --light-bg: #f8f9fa;
+                --light-gray: #f0f2f5;
+                --text-dark: #333333;
+                --text-light: #666666;
+                --text-white: #ffffff;
+                --shadow: 0 4px 20px rgba(0,0,0,0.08);
+                --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+                --transition: all 0.3s ease;
+                --border-radius: 8px;
+                --border-radius-lg: 12px; 
+                --primary-red: #d32f2f;
+                --primary-red-dark: #b71c1c;
+                --primary-red-light: #ff6659;
+                --accent-red: #ff5252;
+                --pure-white: #ffffff;
+                --off-white: #fcfcfc;
+                --light-gray: #f5f5f5;
+                --medium-gray: #e0e0e0;
+                --text-dark: #212121;
+                --text-medium: #424242;
+                --text-light: #757575;
+                --shadow-light: 0 2px 10px rgba(211, 47, 47, 0.08);
+                --shadow-medium: 0 4px 20px rgba(211, 47, 47, 0.12);
+                --shadow-heavy: 0 8px 30px rgba(211, 47, 47, 0.15);
+                --transition-fast: all 0.2s ease;
+                --transition-normal: all 0.3s ease;
+                --transition-slow: all 0.5s ease;
+                --border-radius-sm: 6px;
+                --border-radius-md: 10px;
+                --border-radius-lg: 16px;
+                --border-radius-xl: 24px;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: 'Poppins', 'Segoe UI', Tahoma, Arial, sans-serif;
+                color: var(--text-dark);
+                background-color: #ffffff;
+                line-height: 1.7;
+                overflow-x: hidden;
+            }
+
+             /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(143, 75, 75, 0.404), rgba(97, 46, 46, 0.384)), url('3.jpg');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-logo {
+            width: 300px;
+            height: 180px;
+            border-radius: var(--border-radius-lg);
+            background: var(--primary-red);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 30px rgba(211, 47, 47, 0.3);
+            text-align: center;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 30px rgba(211, 47, 47, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(211, 47, 47, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 30px rgba(211, 47, 47, 0.3); }
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--light-gray);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            background: var(--primary-red);
+            border-radius: 2px;
+            animation: loading 2s infinite ease-in-out;
+        }
+
+        @keyframes loading {
+            0% { left: -30%; }
+            100% { left: 100%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            animation: logoPulse 4s infinite ease-in-out;
+        }
+        
+        .logo-circle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
+        }
+        
+        .logo-circle img {
+            width: 75%;
+            height: 75%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        
+        .logo-glow {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            z-index: -1;
+            animation: rotate 10s linear infinite;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(143, 75, 75, 0.404), rgba(97, 46, 46, 0.384)), url('1.jpg');
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-white);
+            padding: 100px 20px;
+
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        /* Top Navigation */
+        .top-nav {
+            background: var(--primary-dark);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .top-nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            bottom: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .top-nav a:hover::after,
+        .top-nav a.active::after {
+            transform: scaleX(1);
+        }
+
+        .top-nav a:hover {
+            color: var(--accent);
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        </style>
+        
+
+    </head>
+
+    <body>
+         <!-- Loading Screen -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="loading-logo">
+                <div class="logo-circle">
+                    <img src="basiced.jpg" alt="AppORG Logo">
+                </div>
+                <div class="logo-glow"></div>
+                <div>BASIC EDUCATION DEPARTMENT</div>
+            </div>
+                <div class="loading-bar"></div>
+        </div>
+
+        <!-- Top Navigation -->
+         <nav class="top-nav" aria-label="Top Navigation">
+            <div class="top-nav-container">
+                <ul>
+                    <li><a href="home.html" class="active"><i class="fas fa-home"></i> HOME</a></li>
+                        <li><a href="part1.html">Part I</a></li>
+                        <li><a href="part2.html">Part II</a></li>
+                        <li><a href="part3.html">Part III</a></li>
+                </ul>
+            </div>
+         </nav>
+            
+
+        
+
+        <!-- Hero Section -->
+         <section class="hero">
+            <div class="container">
+                <div class="hero-content" id="heroContent">
+                    
+                </div>
+            </div>
+         </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+         // Loading screen
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                document.getElementById('loadingScreen').style.visibility = 'hidden';
+                
+                // Show header
+                document.getElementById('header').classList.add('visible');
+                
+                // Show hero content
+                setTimeout(() => {
+                    document.getElementById('heroContent').classList.add('visible');
+                }, 300);
+            }, 1500);
+
+        });
+    </script>
+
+    </body>
+
+</html>
